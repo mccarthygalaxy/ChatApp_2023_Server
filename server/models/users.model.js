@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const UsersSchema = new mongoose.Schema({
-    // columns for out document
+
     username: {
         type: String,
         required: true,

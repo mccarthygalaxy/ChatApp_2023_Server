@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
-const RoomSchema = new mongoose.Schema({
-    // columns for out document
+const RoomsSchema = new mongoose.Schema({
+
     title: {
         type: String,
-        required: true, // default is false.
+        required: true,
         unique: true,
     },
     description: {
