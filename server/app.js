@@ -8,8 +8,9 @@ const mongoose = require('mongoose'); // used from node_modules
 const MONGO = process.env.MONGO || process.env.MONGOB; // connection variable from .env
 
 //* Controllers
-// const users = require('./controllers/user.controller');
-// const movies = require('./controllers/movie.controller');
+const users = require('./controllers/user.controller');
+const rooms = require('./controllers/room.controller');
+const messages = require('./controllers/message.controller');
 
 
 //! MIDDLEWARE
@@ -24,8 +25,9 @@ db.once("open", () => log(`Connected: ${MONGO}`));
 app.use(express.json());
 
 //! ROUTES
-// app.use('/user', users);
-// app.use('/movies', movies);
+app.use('/users', users);
+app.use('/rooms', rooms);
+app.use('/messages', messages);
 
 
 app.listen(PORT, () => log(`Chat Server running on Port: ${PORT}`));

@@ -18,4 +18,4 @@ const UsersSchema = new mongoose.Schema({
     },
 });
 
-module.exports = mongoose.model('Messages', UsersSchema);
+module.exports = mongoose.model('Users', UsersSchema);
