@@ -1,21 +1,24 @@
 //! IMPORTS
-require('dotenv').config(); // connects our .env file to our complete project.
+require('dotenv').config();
 const express = require('express');
 const app = express();
-const PORT = process.env.PORT || 4000; // points to our environment file and puts the value of PORT from that variable into this PORT variable.
+const PORT = process.env.PORT || 4000;
 const log = console.log;
-const mongoose = require('mongoose'); // used from node_modules
-const MONGO = process.env.MONGO || process.env.MONGOB; // connection variable from .env
+const mongoose = require('mongoose');
+const MONGO = process.env.MONGO || process.env.MONGOB;
 
 //* Controllers
-const users = require('./controllers/user.controller');
-const rooms = require('./controllers/room.controller');
-const messages = require('./controllers/message.controller');
+const user = require('./controllers/user.controller');
+const room = require('./controllers/room.controller');
+const message = require('./controllers/message.controller');
+
+// const validateSession = require('./middleware/validate-session');
 
 
 //! MIDDLEWARE
 //* database connections
 mongoose.connect(`${MONGO}/ChatApp`);
+
 
 const db = mongoose.connection;
 db.once("open", () => log(`Connected: ${MONGO}`));
@@ -25,9 +28,11 @@ db.once("open", () => log(`Connected: ${MONGO}`));
 app.use(express.json());
 
 //! ROUTES
-app.use('/users', users);
-app.use('/rooms', rooms);
-app.use('/messages', messages);
+app.use('/user', user);
+app.use('/room', room);
+app.use('/message', message);
+
+// app.use(validateSession);
 
 
 app.listen(PORT, () => log(`Chat Server running on Port: ${PORT}`));

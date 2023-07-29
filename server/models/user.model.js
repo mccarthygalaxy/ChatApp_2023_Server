@@ -1,22 +1,22 @@
 const mongoose = require('mongoose');
 
-const RoomsSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
 
-    title: {
+    username: {
         type: String,
         required: true,
         unique: true,
     },
-    description: {
-        type: String,
-    },
-    messages: {
-        type: Array,
-    },
-    ownerId: {
+    email: {
         type: String,
         required: true,
+        unique: true,
     },
+    password: {
+        type: String,
+        required: true,
+    }
+
 });
 
-module.exports = mongoose.model('Rooms', RoomsSchema);
+module.exports = mongoose.model('User', UserSchema);

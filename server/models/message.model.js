@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const MessagesSchema = new mongoose.Schema({
+const MessageSchema = new mongoose.Schema({
 
     date: {
         type: String,
@@ -10,12 +10,12 @@ const MessagesSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    owner: {
+    owner_id: {
         type: String,
     },
-    room: {
+    room_id: {
         type: String,
     },
 });
 
-module.exports = mongoose.model('Messages', MessagesSchema);
+module.exports = mongoose.model('Message', MessageSchema);

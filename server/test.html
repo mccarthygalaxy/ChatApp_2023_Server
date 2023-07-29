@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test POST Request</title>
+</head>
+<body>
+    <h1>Test POST Request to /message</h1>
+    <form action="http://localhost:4005/message" method="POST">
+        <label for="date">Date:</label>
+        <input type="text" name="date" value="2023-07-29T12:00:00Z">
+        <br>
+        <label for="text">Text:</label>
+        <input type="text" name="text" value="Lorem Ipsum to The Ranch.">
+        <br>
+        <label for="owner_id">Owner ID:</label>
+        <input type="text" name="owner_id" value="64c018b87a9a78e72b4b0c71">
+        <br>
+        <label for="room_id">Room ID:</label>
+        <input type="text" name="room_id" value="64c35011f361bb0f456e169a">
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
