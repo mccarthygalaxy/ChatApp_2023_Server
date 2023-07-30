@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const MessageSchema = new mongoose.Schema({
 
     date: {
-        type: String,
+        type: String, // Date
         required: true,
     },
     text: {
@@ -11,10 +11,11 @@ const MessageSchema = new mongoose.Schema({
         required: true,
     },
     owner_id: {
-        type: String,
+        type: String, // mongoose.Types.ObjectId
     },
     room_id: {
-        type: String,
+        type: String, // mongoose.Types.ObjectId
+        // ref: "user"
     },
 });
 

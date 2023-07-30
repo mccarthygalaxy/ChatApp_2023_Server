@@ -20,28 +20,29 @@ const errorResponse = (res, error) => {
 };
 
 //TODO MESSAGE POST - CREATE NEW MESSAGE
-router.post('/message', validateSession, async (req, res) => {
+router.post('/', validateSession, async (req, res) => {
     console.log("Route reached!");
     try {
 
         //1. Pull data from client (body)
-        const { date, text, owner_id, room_id } = req.body;
+        const { date, text, room_id } = req.body;
 
         const ownerId = req.user.id;
         console.log("OwnerId:", ownerId);
 
         //2. Create new object using the Model
         const message = new Message({
-            date: req.body.date,
-            text: req.body.text,
-            owner_id: req.user.id,
-            room_id: req.body.room_id
+            date: date,
+            text: text,
+            owner_id: ownerId, // declared above
+            room_id: room_id
         });
 
         console.log("New Message Object:", message);
 
         //3. Find the room to which you want to add the message
-        const room = await Room.findById(room_id);
+        const room = await Room.findOneAndUpdate(room_id);
+        // const room1 = await Room.findOneAndUpdate({_id: roomId} , {$push: {messages: roomMessage}});
 
         console.log("Room:", room);
 
@@ -51,13 +52,15 @@ router.post('/message', validateSession, async (req, res) => {
             });
         }
 
+        const newMessage = await message.save();
+
         //4. Use mongoose method to save the new message to MongoDB
-        room.messages.push(message);
-        await room.save();
+        // room.messages.push(message);
+        // await room.save();
 
         //5. Client response
         res.status(200).json({
-            newMessage: message,
+            newMessage: newMessage,
             message: `Message sent by ${req.user.username}.`
         });
 
