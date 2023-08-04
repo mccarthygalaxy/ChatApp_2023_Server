@@ -1,11 +1,11 @@
 const router = require('express').Router();
 const Room = require('../models/room.model');
-const User = require('../models/user.model');
 const Message = require('../models/message.model');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const SECRET = process.env.JWT;
-// const currentDate = new Date();
+
+// const User = require('../models/user.model');
+// const bcrypt = require('bcrypt');
+// const jwt = require('jsonwebtoken');
+// const SECRET = process.env.JWT;
 
 //* Validate Session
 const validateSession = require('../middleware/validate-session');
@@ -25,16 +25,13 @@ router.post('/', validateSession, async (req, res) => {
     try {
 
         //1. Pull data from client (body)
-        const { date, text, room_id } = req.body;
+        const { text, room_id } = req.body;
 
         const ownerId = req.user.id;
-        // const roomName = req.room.title;
-        // console.log("OwnerId:", ownerId);
-        // console.log("RoomName:", roomName);
 
         //2. Create new object using the Model
         const message = new Message({
-            date: new Date,
+            date: new Date(),
             text,
             owner_id: ownerId, // declared above
             room_id
@@ -43,11 +40,11 @@ router.post('/', validateSession, async (req, res) => {
         // console.log("New Message Object:", message);
 
         //3. Find the room to which you want to add the message
-        const room = await Room.findById(room_id);
+        const roomToUpdate = await Room.findById(room_id);
 
         // console.log("Room:", room);
 
-        if (!room) {
+        if (!roomToUpdate) {
             return res.status(404).json({
                 error: 'No such room in collection.'
             });
@@ -55,8 +52,8 @@ router.post('/', validateSession, async (req, res) => {
         
         //4. Use mongoose method to save the new message to MongoDB
 
-        const newMessage = await message.save();
-        console.log(`New Message = ${newMessage}`);
+        await message.save();
+        // console.log(`New Message = ${newMessage}`);
         
         // const roomMessage = {
         //     id: newMessage.id,
@@ -65,16 +62,16 @@ router.post('/', validateSession, async (req, res) => {
         // }
         // console.log(`Room Message = ${roomMessage}`);
 
-        // await Room.findOneAndUpdate({id: room_id}, {$push: {messages: newMessage}});
+        await Room.findOneAndUpdate({_id: roomToUpdate}, {$push: {messages: message}});
         
         // newMessage ? success(res, newMessage) : incomplete(res);
 
-        room.messages.push(newMessage);
-        await room.save();
+        // room.messages.push(newMessage);
+        // await room.save();
 
         //5. Client response
         res.status(200).json({
-            newMessage: newMessage,
+            // newMessage: newMessage,
             message: `Message sent by ${req.user.username}.`
         });
 
@@ -89,16 +86,17 @@ router.post('/', validateSession, async (req, res) => {
 });
 
 //TODO DELETE ONE - DELETE MESSAGE (IF OWNER)
-router.delete('/:id', validateSession, async (req, res) => {
+router.delete('/:id/:room_id', validateSession, async (req, res) => {
     try {
-        //1. Capture ID
-        const { id } = req.params;
-        const { msgToDelete } = req.body;
-        const prospect = msgToDelete.messages.findById(id);
+        //1. Capture ID and room_id from request parameters.
+        const { id, room_id } = req.params;
 
+        //2. Remove the message from the Message collection (if message owner = validated user)
+        const deleteMessage = await Message.findOneAndDelete({ _id: id } ); // ownerId: req.user.id
 
-        //2. Use delete method to locate and remove based off ID
-        const deleteMessage = await Message.deleteOne({ _id: id, ownerId: req.user.id });
+        //3. Find the corresponding room by room_id and remove the message from its messages array
+        await Room.findOneAndDelete ({ _id: room_id }, {messages: id});
+
 
         
 

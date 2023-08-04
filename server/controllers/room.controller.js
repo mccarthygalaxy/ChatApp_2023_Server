@@ -9,14 +9,6 @@ const SECRET = process.env.JWT;
 //* Validate Session
 const validateSession = require('../middleware/validate-session');
 
-// Error Response function
-// const errorResponse = (res, error) => {
-//     return (
-//         res.status(500).json({
-//             error: error.message
-//         })
-//     ) 
-// };
 
 //TODO ROOM POST - CREATE NEW ROOM
 router.post('/createRoom', validateSession, async (req, res) => {
@@ -62,10 +54,10 @@ router.get('/:title', validateSession, async (req, res) => {
         console.log('Checking.');
 
         getRoom ?
-            (console.log(`Found room: ${getRoom.title}`), // Log the room name here
+            (console.log(`Found room: ${getRoom.title} Created by: ${getRoom.ownerName}`), // Log the room name here
                 res.status(200).json({
                     getRoom,
-                    message: `Found room: ${getRoom.title}. Created by: ${getRoom.ownerId.username}`
+                    message: `Found room: ${getRoom.title}. Created by: ${getRoom.ownerName}`
                 })) :
             res.status(404).json({
                 message: `No room named '${title}' found.`
@@ -100,7 +92,40 @@ router.get('/', validateSession, async (req, res) => {
     }
 });
 
-module.exports = router;
+// module.exports = router;
+
+//TODO ROOM GET - GET ALL ROOMS BY OWNER
+router.get('/owner/:ownerId', validateSession, async (req, res) => {
+        try {
+
+        //1. Pull value from the body
+        const { ownerId } = req.params;
+        // const { ownerName } = req.room.ownerName;
+        
+        const getAllByOwner = await Room.find({ ownerId }).populate('ownerId', 'ownerName');
+
+        if (getAllByOwner.length > 0) {
+            const roomTitles = getAllByOwner.map(room => room.title);
+            console.log('Room Titles:', roomTitles);
+
+            // Access ownerName
+            const ownerNames = getAllByOwner.map(room => room.ownerName);
+            console.log('Owner Names:', ownerNames);
+
+            res.status(200).json({
+                getAllByOwner,
+                roomTitles,
+                message: `Found rooms owned by ${ownerId}: ${roomTitles.join(', ')}`
+            });
+        } else {
+            res.status(404).json({
+                message: `No rooms found.`
+            });
+        }
+    } catch (err) {
+        errorResponse(res, err);
+    }
+});
 
 
 //TODO PATCH ROOM INFO - UPDATE ROOM
@@ -153,7 +178,7 @@ router.delete('/:id', validateSession, async (req, res) => {
                 message: "Room has been removed."
             }) :
             res.status(404).json({
-                message: "No such room in collection."
+                message: "Either no such room exists or you are not its Admin."
             })
 
     } catch (err) {
