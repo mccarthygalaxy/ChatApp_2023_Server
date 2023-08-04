@@ -5,12 +5,12 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 const log = console.log;
-const mongoose = require('mongoose');
-const MONGO = process.env.MONGO || process.env.MONGOB;
+// const mongoose = require('mongoose');
+// const MONGO = process.env.MONGO || process.env.MONGOB;
 
 //! IMPORTS
+// const { user, room, message } = require ('./controllers');
 const { db } = require('./db');
-// const { user, room, message } = require ('./controllers')
 
 //* Controllers
 const user = require('./controllers/user.controller');

@@ -62,7 +62,9 @@ router.post('/', validateSession, async (req, res) => {
         // }
         // console.log(`Room Message = ${roomMessage}`);
 
-        await Room.findOneAndUpdate({_id: roomToUpdate}, {$push: {messages: message}});
+        await Room.findOneAndUpdate(
+            {_id: roomToUpdate}, 
+            {$push: {messages: message} });
         
         // newMessage ? success(res, newMessage) : incomplete(res);
 
