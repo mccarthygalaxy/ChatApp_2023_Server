@@ -42,21 +42,16 @@ router.post('/createRoom', validateSession, async (req, res) => {
 
 //TODO ROOM GET - GET ONE ROOM
 router.get('/:title', validateSession, async (req, res) => {
-    console.log("Route reached!");
-    // console.log(req);
 
     try {
         const { title } = req.params;
         const getRoom = await Room.findOne({ title: title }).populate('ownerId', 'username');
 
-        console.log('Checking.');
-
         getRoom ?
-            (console.log(`Found room: ${getRoom.title} Created by: ${getRoom.ownerName}`), // Log the room name here
                 res.status(200).json({
                     getRoom,
                     message: `Found room: ${getRoom.title}. Created by: ${getRoom.ownerName}`
-                })) :
+                }) :
             res.status(404).json({
                 message: `No room named '${title}' found.`
             });
@@ -68,12 +63,10 @@ router.get('/:title', validateSession, async (req, res) => {
 //TODO ROOM GET - GET ALL ROOMS
 router.get('/', validateSession, async (req, res) => {
     try {
-
         const getAllRooms = await Room.find().populate('ownerId', 'username');
 
         if (getAllRooms.length > 0) {
             const roomTitles = getAllRooms.map(room => room.title);
-            console.log('Room Titles:', roomTitles);
 
             res.status(200).json({
                 getAllRooms,
@@ -90,8 +83,6 @@ router.get('/', validateSession, async (req, res) => {
     }
 });
 
-// module.exports = router;
-
 //TODO ROOM GET - GET ALL ROOMS BY OWNER
 router.get('/owner/:ownerId', validateSession, async (req, res) => {
         try {
@@ -104,16 +95,15 @@ router.get('/owner/:ownerId', validateSession, async (req, res) => {
 
         if (getAllByOwner.length > 0) {
             const roomTitles = getAllByOwner.map(room => room.title);
-            console.log('Room Titles:', roomTitles);
 
             // Access ownerName
             const ownerNames = getAllByOwner.map(room => room.ownerName);
-            console.log('Owner Names:', ownerNames);
 
             res.status(200).json({
                 getAllByOwner,
                 roomTitles,
-                message: `Found rooms owned by ${ownerId}: ${roomTitles.join(', ')}`
+                ownerNames,
+                message: `Found rooms owned by ${ownerId} - ${ownerNames}: ${roomTitles.join(', ')}`
             });
         } else {
             res.status(404).json({
@@ -135,7 +125,6 @@ router.patch('/patchRoomInfo/:id', validateSession, async (req, res) => {
 
         //2. Pull data from the body
         const info = req.body;
-        // console.log(info);
 
         // Reshape into New Object
         const newObj = {
@@ -146,10 +135,7 @@ router.patch('/patchRoomInfo/:id', validateSession, async (req, res) => {
 
         //3. Use method to locate document based on Title and pass in new info (description).
         const returnOption = { new: true };
-
-        // const updated = await Room.findOneAndUpdate({ _id: id, ownerId: req.user.id }, info, returnOption);
         const updated = await Room.findOneAndUpdate({ _id: id, ownerId: req.user.id }, newObj, returnOption);
-        // console.log(`${newObj.title} has been updated.`);
 
         //4. Respond to client
         res.status(200).json({

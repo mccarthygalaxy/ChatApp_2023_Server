@@ -3,11 +3,6 @@ const Room = require('../models/room.model');
 const Message = require('../models/message.model');
 const { error, success, incomplete } = require("../helpers");
 
-// const User = require('../models/user.model');
-// const bcrypt = require('bcrypt');
-// const jwt = require('jsonwebtoken');
-// const SECRET = process.env.JWT;
-
 //* Validate Session
 const validateSession = require('../middleware/validate-session');
 
@@ -20,9 +15,9 @@ const errorResponse = (res, error) => {
     )
 };
 
-//TODO MESSAGE POST - CREATE NEW MESSAGE
+//! MESSAGE POST - CREATE NEW MESSAGE -------------------------------------
 router.post('/', validateSession, async (req, res) => {
-    console.log("Route reached!");
+
     try {
         //1. Pull data from client (body)
         const { text, room_id } = req.body;
@@ -55,7 +50,7 @@ router.post('/', validateSession, async (req, res) => {
     }
 });
 
-//TODO DELETE ONE - DELETE MESSAGE (IF OWNER)
+//! DELETE ONE - DELETE MESSAGE (IF OWNER) -------------------------------------
 router.delete('/:id/:room_id', validateSession, async (req, res) => {
     try {
         //1. Capture ID and room_id from request parameters.
@@ -65,18 +60,22 @@ router.delete('/:id/:room_id', validateSession, async (req, res) => {
         const deleteMessage = await Message.deleteOne({ _id: id, owner_id: req.user.id });
 
         //3. Find the corresponding room by room_id and remove the message from its messages array (if message owner = validated user)
-        // Get all messages associated with room to pass to update
+        //* Get all messages associated with room to pass to update
         const updatedMessages = await Message.find({ room_id: room_id });
 
         const returnOption = { new: true }
         const updatedRoom = await Room.findByIdAndUpdate(
             { _id: room_id }, // Find the room where the user is the owner
-            // { $pull: { messages: id } } // Remove the message ID from the messages array
+            
+            //TODO { $pull: { messages: id } } // Remove the message ID from the messages array
+
+            //* Update Room's Message Array with newly filtered array (excluding deleteMessage's id)
             { messages: updatedMessages },
             returnOption
         );
 
-        //4. Respond to client.
+        //4. Respond to client. 
+        //* Ternary for SPECIFIC Response.
         deleteMessage.deletedCount === 1 ?
             updatedRoom ?
                 res.status(200).json({
@@ -95,5 +94,27 @@ router.delete('/:id/:room_id', validateSession, async (req, res) => {
         errorResponse(res, err);
     }
 });
+
+//! MESSAGE GET - GET ALL MESSAGES BY ROOM ID
+router.get('/:ROOMID', async (req, res) => {
+    try {
+        //1. Pull value from the body
+        const roomId = req.params.ROOMID;
+        // console.log("Received roomId:", roomId);
+
+//* WHAT is the DIFFERENCE between above code and below (which does NOT WORK!) ???
+// router.get('/:roomId', async (req, res) => {
+//     try {
+//         const { roomId } = req.params;
+//         console.log("Received roomId:", roomId);
+
+        const getAllMessages = await Message.find({ room_id: roomId });
+
+        getAllMessages ? success(res, getAllMessages) : incomplete(res);
+    } catch (err) {
+        error(res, err);
+    }
+});
+
 
 module.exports = router;

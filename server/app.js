@@ -5,18 +5,10 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 const log = console.log;
-// const mongoose = require('mongoose');
-// const MONGO = process.env.MONGO || process.env.MONGOB;
 
 //! IMPORTS
 const { userController, roomController, messageController } = require ('./controllers');
 const { db } = require('./db');
-
-//* Controllers
-// const user = require('./controllers/user.controller');
-// const room = require('./controllers/room.controller');
-// const message = require('./controllers/message.controller');
-
 
 //! MIDDLEWARE
 app.use(express.static(`${__dirname}/public`));
