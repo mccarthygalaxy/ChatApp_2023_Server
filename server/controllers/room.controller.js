@@ -4,6 +4,7 @@ const User = require('../models/user.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const SECRET = process.env.JWT;
+const { error, success, incomplete } = require("../helpers");
 
 
 //* Validate Session
@@ -16,8 +17,6 @@ router.post('/createRoom', validateSession, async (req, res) => {
 
         //1. Pull data from client (body)
         const { title, description, messages } = req.body;
-        // let ownerId = creatorId;
-        // let messages = [];
 
         const ownerId = req.user.id;
 
@@ -33,7 +32,6 @@ router.post('/createRoom', validateSession, async (req, res) => {
         //4. Client response
         res.status(200).json({
             newRoom,
-            // message: `${newRoom.title} room created! Admin is ${adminName}.`
             message: `${newRoom.title} room created! Admin is ${req.user.username}.`
         });
 
@@ -137,8 +135,9 @@ router.patch('/patchRoomInfo/:id', validateSession, async (req, res) => {
 
         //2. Pull data from the body
         const info = req.body;
-        console.log(info);
+        // console.log(info);
 
+        // Reshape into New Object
         const newObj = {
             title: info.title,
             description: info.description,
@@ -150,13 +149,13 @@ router.patch('/patchRoomInfo/:id', validateSession, async (req, res) => {
 
         // const updated = await Room.findOneAndUpdate({ _id: id, ownerId: req.user.id }, info, returnOption);
         const updated = await Room.findOneAndUpdate({ _id: id, ownerId: req.user.id }, newObj, returnOption);
-        console.log(updated);
+        // console.log(`${newObj.title} has been updated.`);
 
         //4. Respond to client
         res.status(200).json({
             message: `${updated.title} description: '${updated.description}' owner: ${updated.ownerId}`,
             updated
-        });
+        })
 
     } catch (err) {
         errorResponse(res, err);

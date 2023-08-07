@@ -12,7 +12,7 @@ const validateSession = async(req,res,next) => {
         //2. Check the status of token. (expired?)
         const decoded = await jwt.verify(token, process.env.JWT);
         //* verify(string, secret);
-        console.log(decoded);
+        // console.log(decoded);
     
         //3. Provide response - if valid, generate a variable that holds user info
         const user = await User.findById(decoded.id);

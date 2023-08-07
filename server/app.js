@@ -9,13 +9,13 @@ const log = console.log;
 // const MONGO = process.env.MONGO || process.env.MONGOB;
 
 //! IMPORTS
-// const { user, room, message } = require ('./controllers');
+const { userController, roomController, messageController } = require ('./controllers');
 const { db } = require('./db');
 
 //* Controllers
-const user = require('./controllers/user.controller');
-const room = require('./controllers/room.controller');
-const message = require('./controllers/message.controller');
+// const user = require('./controllers/user.controller');
+// const room = require('./controllers/room.controller');
+// const message = require('./controllers/message.controller');
 
 
 //! MIDDLEWARE
@@ -25,9 +25,9 @@ app.use(express.urlencoded({ extended: true }));
 
 
 //! ROUTES
-app.use('/user', user);
-app.use('/room', room);
-app.use('/message', message);
+app.use('/user', userController);
+app.use('/room', roomController);
+app.use('/message', messageController);
 
 //! CONNECTION
 const server = async() => {

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Message = require('../models/message.model');
 
 const RoomSchema = new mongoose.Schema({
 
@@ -11,21 +12,17 @@ const RoomSchema = new mongoose.Schema({
         type: String,
     },
     messages: {
-        type: Array,
         // type: [Object],
+        type: Array,
     },
     ownerId: {
-        // type: String,
         type: mongoose.Schema.Types.ObjectId,
-        // ref: 'User', // Refers to 'User' collection for referencing the room Owner
-        // required: true,
+        ref: 'User', // Refers to 'User' collection for referencing the room Owner
     },
-    // owner_id: {
-    //     type: String
-    // }
     ownerName: {
         type: String
     }
+
 });
 
 module.exports = mongoose.model('Room', RoomSchema);
