@@ -1,0 +1,39 @@
+{
+	"id": "47fa0cc5-e4b4-4905-8592-5a2d798485b0",
+	"name": "May23-ChatApp",
+	"values": [
+		{
+			"key": "JWT",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "USERID",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "URL",
+			"value": "localhost:4005",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "ROOMID",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "OWNERID",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2023-08-07T03:32:10.893Z",
+	"_postman_exported_using": "Postman/10.16.5"
+}

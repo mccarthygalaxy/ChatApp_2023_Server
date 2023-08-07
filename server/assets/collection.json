@@ -1,0 +1,500 @@
+{
+	"info": {
+		"_postman_id": "63c6e2c2-78e7-41d3-9ada-6b0547d1610f",
+		"name": "ChatApp_2023_Server",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27179888"
+	},
+	"item": [
+		{
+			"name": "SignUp",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"Mikhail\",\r\n    \"email\": \"mik@email.com\",\r\n    \"password\": \"test\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/user/signup",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"user",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Liz",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"liz@email.com\",\r\n    \"password\": \"test\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/user/login",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Desmond",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"dez@email.com\",\r\n    \"password\": \"test\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/user/login",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Mikhail",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"mik@email.com\",\r\n    \"password\": \"test\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/user/login",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Olivia",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"oli@email.com\",\r\n    \"password\": \"test\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/user/login",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Room",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{JWT}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"The Pallestra\",\r\n  \"description\": \"A Place To Ride Things.\"\r\n}\r\n\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/room/createRoom",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"room",
+						"createRoom"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create New Message",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{JWT}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"ownerId\": \"64d0429cbfc220faa242f159\",\r\n  \"text\": \"Lorem Ipsum Message The Arrow 003 by Mikhail\",\r\n  \"room_id\": \"64d0429cbfc220faa242f159\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/message/",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"message",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get One Room",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{JWT}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/room/The%20Arrow",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"room",
+						"The%20Arrow"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Rooms",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{JWT}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/room/",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"room",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Rooms By Owner ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{JWT}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/room/owner/:ownerId",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"room",
+						"owner",
+						":ownerId"
+					],
+					"variable": [
+						{
+							"key": "ownerId",
+							"value": "64c018b87a9a78e72b4b0c71"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Messages By Room ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{JWT}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/message/:ROOMID",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"message",
+						":ROOMID"
+					],
+					"variable": [
+						{
+							"key": "ROOMID",
+							"value": "64d029fe3445e9701b1ebb7d"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a Room",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{JWT}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"title\": \"The Looking Glass\",\r\n\"description\": \"A Place To Examine Things!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/room/patchRoomInfo/:id",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"room",
+						"patchRoomInfo",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "64d045178e5f698e5f4422ca"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a Room",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{JWT}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/room/:id",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"room",
+						":id"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "",
+							"disabled": true
+						}
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "64d05ce54ddda47261ccfeca",
+							"description": "Room's Object ID"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a Message",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{JWT}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/message/:id/:room_id/",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"message",
+						":id",
+						":room_id",
+						""
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "64d048926a04a9c94c5d456f"
+						},
+						{
+							"key": "room_id",
+							"value": "64d029fe3445e9701b1ebb7d"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
