@@ -13,12 +13,12 @@ const MessageSchema = new mongoose.Schema({
     owner_id: {
         // type: String, 
         type: mongoose.Types.ObjectId,
-        ref: "User"
+        ref: 'User'
     },
     room_id: {
         // type: String,
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Room"
+        ref: 'Room'
     },
 });
 

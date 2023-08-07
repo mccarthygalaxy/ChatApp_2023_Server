@@ -11,7 +11,7 @@ const { error, success, incomplete } = require("../helpers");
 const validateSession = require('../middleware/validate-session');
 
 
-//TODO ROOM POST - CREATE NEW ROOM
+//! ROOM POST - CREATE NEW ROOM -------------------------------------
 router.post('/createRoom', validateSession, async (req, res) => {
     try {
 
@@ -40,7 +40,7 @@ router.post('/createRoom', validateSession, async (req, res) => {
     }
 });
 
-//TODO ROOM GET - GET ONE ROOM
+//! ROOM GET - GET ONE ROOM -------------------------------------
 router.get('/:title', validateSession, async (req, res) => {
 
     try {
@@ -60,7 +60,7 @@ router.get('/:title', validateSession, async (req, res) => {
     }
 });
 
-//TODO ROOM GET - GET ALL ROOMS
+//! ROOM GET - GET ALL ROOMS -------------------------------------
 router.get('/', validateSession, async (req, res) => {
     try {
         const getAllRooms = await Room.find().populate('ownerId', 'username');
@@ -83,7 +83,7 @@ router.get('/', validateSession, async (req, res) => {
     }
 });
 
-//TODO ROOM GET - GET ALL ROOMS BY OWNER
+//! ROOM GET - GET ALL ROOMS BY OWNER -------------------------------------
 router.get('/owner/:ownerId', validateSession, async (req, res) => {
         try {
 
@@ -116,7 +116,7 @@ router.get('/owner/:ownerId', validateSession, async (req, res) => {
 });
 
 
-//TODO PATCH ROOM INFO - UPDATE ROOM
+//! PATCH ROOM INFO - UPDATE ROOM -------------------------------------
 router.patch('/patchRoomInfo/:id', validateSession, async (req, res) => {
     try {
 
@@ -148,7 +148,7 @@ router.patch('/patchRoomInfo/:id', validateSession, async (req, res) => {
     }
 });
 
-//TODO DELETE ONE - DELETE ROOM (IF OWNER)
+//! DELETE ONE - DELETE ROOM (IF OWNER) -------------------------------------
 router.delete('/:id', validateSession, async (req, res) => {
     try {
         //1. Capture ID

@@ -50,7 +50,7 @@ router.post('/', validateSession, async (req, res) => {
     }
 });
 
-//! DELETE ONE - DELETE MESSAGE (IF OWNER) -------------------------------------
+//! MESSAGE DELETE ONE - DELETE MESSAGE (IF OWNER) -------------------------------------
 router.delete('/:id/:room_id', validateSession, async (req, res) => {
     try {
         //1. Capture ID and room_id from request parameters.
@@ -95,22 +95,15 @@ router.delete('/:id/:room_id', validateSession, async (req, res) => {
     }
 });
 
-//! MESSAGE GET - GET ALL MESSAGES BY ROOM ID
+//! MESSAGE GET - GET ALL MESSAGES BY ROOM ID -------------------------------------
 router.get('/:ROOMID', async (req, res) => {
     try {
-        //1. Pull value from the body
         const roomId = req.params.ROOMID;
-        // console.log("Received roomId:", roomId);
-
-//* WHAT is the DIFFERENCE between above code and below (which does NOT WORK!) ???
-// router.get('/:roomId', async (req, res) => {
-//     try {
-//         const { roomId } = req.params;
-//         console.log("Received roomId:", roomId);
 
         const getAllMessages = await Message.find({ room_id: roomId });
 
         getAllMessages ? success(res, getAllMessages) : incomplete(res);
+        
     } catch (err) {
         error(res, err);
     }
