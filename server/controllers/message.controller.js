@@ -110,4 +110,40 @@ router.get('/:ROOMID', async (req, res) => {
 });
 
 
+//! MESSAGE PATCH - UPDATE SPECIFIC MESSAGE TEXT -------------------------------------
+router.patch('/:ROOMID/:MESSAGEID', validateSession, async (req, res) => {
+    try {
+        const { ROOMID, MESSAGEID } = req.params;
+        const { newText } = req.body;
+
+        // Find the room by its roomId
+        const room = await Room.findOne({ _id: ROOMID }); // Can adjust to include `, ownerId: req.user.id` so that user must be room owner too.
+        if (!room) {
+            return res.status(404).json({ message: "Room not found." });
+        }
+
+        // Find the message by its MESSAGEID and check if it belongs to the room and the user
+        const message = await Message.findOne({ _id: MESSAGEID, room_id: ROOMID, owner_id: req.user.id });
+        if (!message) {
+            return res.status(404).json({ message: "Message not found in the room." });
+        }
+
+        // Update the message's text and date
+        message.text = newText;
+        message.date = new Date(); // Set the date to the current date and time
+        await message.save();
+
+        // Update the message's text inside the room's messages array
+        await Room.updateOne(
+            { _id: ROOMID, "messages._id": MESSAGEID },
+            { $set: { "messages.$.text": newText, "messages.$.date": new Date() } }
+        );
+
+        res.status(200).json({ message: "Message text has been updated.", updatedMessage: message });
+    } catch (err) {
+        errorResponse(res, err);
+    }
+});
+
+
 module.exports = router;
