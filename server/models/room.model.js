@@ -6,7 +6,7 @@ const RoomSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true,
-        // unique: true,
+        unique: true,
     },
     description: {
         type: String,
@@ -16,7 +16,7 @@ const RoomSchema = new mongoose.Schema({
         // type: [Object],
     },
     ownerId: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Types.ObjectId,
         ref: 'User', // Refers to 'User' collection for referencing the room Owner
     },
     ownerName: {
@@ -26,3 +26,10 @@ const RoomSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('Room', RoomSchema);
+
+
+// messages: [{ id: String, text: String, date: Date }],
+//   ownerId: {
+//     type: mongoose.Types.ObjectId,
+//     ref: "user",
+//   },
