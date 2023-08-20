@@ -58,7 +58,7 @@ router.post('/login', async (req,res) => {
         //*5. Provide a response.
         let creatorId = user._id;
         res.status(200).json({
-            message: `Successful Login!`,
+            message: `Success!`,
             user,
             creatorId,
             token
