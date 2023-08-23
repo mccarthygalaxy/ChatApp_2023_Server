@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navbar, } from 'reactstrap'
+import { Navbar } from 'reactstrap'
 
 export default function Footer() {
 
@@ -8,13 +8,14 @@ export default function Footer() {
   return (
     <>
     <Navbar className="my-2"
-    color="secondary"
+      // color="secondary"
+      // dark
+      // style={{backgroundColor: "blue"}}
+      style={{textAlign: "center"}}
+      >
+              <h6>Upright Project: React Chat Client {currentYear} &copy;</h6>
 
-    dark>
-      <footer>
-            <h6>Upright Project: React Chat Client {currentYear} &copy;</h6>
-        </footer>
-        </Navbar>
+    </Navbar>
     </>
   )
 }

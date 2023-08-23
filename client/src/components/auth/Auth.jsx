@@ -7,12 +7,16 @@ function Auth(props) {
 
     const [ button, setButton ] = useState('Signup')
 
+    /* if button value is 'Login' set it to 'Signup' (when clicked)
+        and vice-versa (ternary): */
     const swapForm = () => {
         button === "Login" ? 
             setButton('Signup') :
             setButton('Login')
     }
 
+        /* if button value is 'Login' display 'Signup' content;
+            if button value is 'Signup' display 'Login' content (ternary): */
     const displayForm = () => {
         return(
             button === "Login" ?
@@ -36,9 +40,13 @@ function Auth(props) {
 
     return (
         <>
-            <Button onClick={swapForm} color='dark'>{button}</Button>
             <Container>
                 {displayForm()}
+                <Row>
+                    <Col sm="6">
+                        <Button onClick={swapForm} color='warning'>{button}</Button>
+                    </Col>
+                </Row>
             </Container>
         </>
     )

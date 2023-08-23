@@ -3,12 +3,6 @@ import { Button, Form, FormGroup, Input, Label } from 'reactstrap'
 import FullButton from '../../buttons/FullButton';
 import { useNavigate } from 'react-router-dom';
 
-/* 
-! Challenge
-    - Set the Signup component to store our session token
-    - After the user signs up, have the route navigate to the /movie endpoint to display our placeholder page.
-*/
-
 function Signup(props) {
 
     const usernameRef = useRef();
