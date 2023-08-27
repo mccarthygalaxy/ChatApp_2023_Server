@@ -1,29 +1,30 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { Button, Col, Container, Form, FormGroup, Input, Label, Row } from 'reactstrap'
 import FullButton from '../buttons/FullButton';
 import { baseURL } from '../environments'
 
 
-function RoomUpdate(props) {
+function MessageUpdate(props) {
     
     const { id } = useParams();
-    
-    // const titleRef = useRef();
-    // const descriptionRef = useRef();
 
-
-    const url = `${baseURL}/room/${id}`;
+    const url = `${baseURL}/message/${id}`;
 
     let originalText = ''
 
-    const [ title, setTitle ] = useState('');
-    const [ description, setDescription ] = useState('');
+    const [ text, setText ] = useState('');
 
     const navigate = useNavigate();
+  
+    
+
+   
+
+   
 
 
-    const fetchRoom = async () => {
+    const fetchMessage = async () => {
       
       try {
         const res = await fetch(url, {
@@ -38,7 +39,7 @@ function RoomUpdate(props) {
         console.log(data);
         const text = data.getMessage;
         originalText = text
-        setDescription()
+        setText(text)
     
 
       } catch (err) {
@@ -49,17 +50,10 @@ function RoomUpdate(props) {
     async function handleSubmit(e) {
         e.preventDefault();
 
-        // const title = titleRef.current.value;
-        // console.log(titleRef.current.value);
-
-        // const description = descriptionRef.current.value;
-        // console.log(descriptionRef.current.value);
-
         // console.log(title)
         let body = JSON.stringify({
-            title: title,
-            description: description
-
+          text: text,
+         
         })
         const requestOptions = {
           headers: new Headers({
@@ -85,7 +79,7 @@ function RoomUpdate(props) {
 
     useEffect(() => {
       if(props.token) {
-        fetchRoom();
+        fetchMessage();
       }
 
     }, [props.token])
@@ -99,10 +93,10 @@ function RoomUpdate(props) {
                 <Row>
                     <Col md='4'>
                         <p>
-                            <b>{originalText}</b>
-                            <br />
-                            When you're happy with your new message, press the button to change.
-                            </p>
+                          <b>{originalText}</b>
+                          <br />
+                          When you're happy with your new message, press the button to change.
+                          </p>
                           <FullButton>
                             <Button
                             color='info'
@@ -113,19 +107,11 @@ function RoomUpdate(props) {
                     <Col md='8'>
                         <Form onSubmit={handleSubmit}>
                             <FormGroup>
-                                <Label>Room Title</Label>
+                                <Label>Type New Message Here</Label>
                                 <Input 
                             
-                                value={title}
-                                onChange={(e) => setTitle(e.target.value)}
-                                />
-                            </FormGroup>
-                            <FormGroup>
-                                <Label>Room Description</Label>
-                                <Input 
-                            
-                                value={description}
-                                onChange={(e) => setDescription(e.target.value)}
+                                value={text}
+                                onChange={(e) => setText(e.target.value)}
                                 />
                             </FormGroup>
                            
@@ -140,4 +126,4 @@ function RoomUpdate(props) {
     )
 }
 
-export default RoomUpdate
+export default MessageUpdate

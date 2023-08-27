@@ -7,6 +7,7 @@ import Footer from './components/footer/Footer';
 import Logout from './components/auth/logout/Logout';
 import RoomIndex from './components/room/RoomIndex'
 import { Col } from 'reactstrap';
+import RoomUpdate from './components/room/RoomEdit';
 
 function App() {
 
@@ -45,6 +46,11 @@ function App() {
                 path='/room'
                 // element={<h2>Movie SECTION Placeholder.com</h2>}
                 element={<RoomIndex token={sessionToken} />}
+              />
+
+              <Route 
+                path='/room/update/:id'
+                element={<RoomUpdate token={sessionToken} />}
               />
 
           </Routes>

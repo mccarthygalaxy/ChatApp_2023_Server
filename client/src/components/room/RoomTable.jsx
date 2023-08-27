@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Col, Container, Table, Row } from 'reactstrap';
 import { baseURL } from '../environments'
 import { useNavigate } from 'react-router-dom';
-import RoomEdit from './RoomEdit';
+// import RoomEdit from './RoomEdit';
 
 // const currentDate = new Date().toISOString();
 
@@ -38,7 +38,6 @@ function RoomTable(props) {
                 props.fetchRooms();
             }
         }
-
 
         async function editRoom(id) {
             const url = `${baseURL}/room/${id}`
@@ -99,14 +98,15 @@ function RoomTable(props) {
                                                 <Button
                                                     color='warning'
                                                     onClick={ () =>
-                                                        <RoomEdit
-                                                            token={props.token}
-                                                            fetchRooms={props.fetchRooms}
-                                                            room_Id={room._id}
-                                                        />
-                                                        // () => 
-                                                        // editRoom(props.selectedRoom._id)
-                                                    }
+                                                        navigate(`/room/update/${room._id}`)}
+                                                    //     <RoomEdit
+                                                    //         token={props.token}
+                                                    //         fetchRooms={props.fetchRooms}
+                                                    //         room_Id={room._id}
+                                                    //     />
+                                                    // }
+                                                    //     // () => 
+                                                    //     // editRoom(props.selectedRoom._id)
                                                 >Edit</Button>
                                                 <Button
                                                     onClick={
