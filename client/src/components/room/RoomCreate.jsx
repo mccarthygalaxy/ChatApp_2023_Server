@@ -11,35 +11,17 @@ function RoomCreate(props) {
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
 
-    // const messagesRef = useRef();
-    const owner_IdRef = props.user_Id;
-
-    // const ownerNameRef = props.user.name;
-
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         const title = titleRef.current.value;
-        console.log(titleRef.current.value);
 
         const description = descriptionRef.current.value;
-        console.log(descriptionRef.current.value);
-
-
-        // const messages  = messagesRef.current.value;
-
-        // const owner_Id  = owner_IdRef.current.value;
-        // console.log(owner_IdRef.current.value);
-
-        // const ownerName  = ownerNameRef.current.value;
 
 
         let body = JSON.stringify({
             title, 
             description, 
-            // owner_Id, 
-            // ownerName
         })
 
         let url = `${baseURL}/room/createRoom`;
@@ -58,7 +40,6 @@ function RoomCreate(props) {
             const res = await fetch(url, requestOption);
             const data = await res.json();
 
-            console.log(data);
             props.fetchRooms();
         } catch (err) {
             console.error(err.message);
@@ -106,7 +87,7 @@ function RoomCreate(props) {
             </ModalFooter>
         </Modal>
         </div>
-      </>
+    </>
     );
 }
 

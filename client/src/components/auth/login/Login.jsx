@@ -36,7 +36,6 @@ function Login({ updateToken }) {
 
             if (data.message === 'Success!') {
                 updateToken(data.token)
-                console.log(data.token)
                 navigate('/room')
             } else {
                 alert(data.message);

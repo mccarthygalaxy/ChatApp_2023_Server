@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react'
-import RoomCreate from './RoomCreate';
-import RoomEdit from './RoomEdit';
 import { Col, Container, Row } from 'reactstrap';
 import RoomTable from './RoomTable';
-import { baseURL } from '../environments'
+import RoomCreate from './RoomCreate';
+import { baseURL} from '../environments'
 
-console.log(baseURL);
+// import RoomEdit from './RoomEdit';
+// import { useNavigate } from 'react-router-dom';
+
 
 function RoomIndex(props) {
 
     const [ rooms, setRooms ] = useState([]);
-    const [ selectedRoom, setSelectedRoom ] = useState(null);
-
+    const [ selectedRoom, setSelectedRoom ] = useState([]);
 
     const fetchRooms = async () => {
+
         const url = `${baseURL}/room`;
 
         const requestOption = {
@@ -28,7 +29,6 @@ function RoomIndex(props) {
             const res = await fetch(url, requestOption);
             const data = await res.json();
 
-            console.log(data);
             setRooms(data.getAllRooms)
 
         } catch (err) {
@@ -40,14 +40,13 @@ function RoomIndex(props) {
         if(props.token)
         fetchRooms();
     }, [props.token]);
-    
+
     return (
         <>  
-
             <Container>
 
                 <Row>
-                        <Col md="12">
+                <Col md="12">
                             <RoomTable
                                 rooms={rooms}
                                 token={props.token}
@@ -56,9 +55,8 @@ function RoomIndex(props) {
                                 setSelectedRoom={setSelectedRoom}
                             />
                         </Col>
-                    </Row>
-
-                    <Row>
+                </Row>
+                <Row>
                         <Col>
                             <RoomCreate
                                 token={props.token}
@@ -66,15 +64,6 @@ function RoomIndex(props) {
                             />
                         </Col>
                     </Row>
-                <br/>
-                    {/* <Row>
-                        <Col>
-                            <RoomEdit
-                                token={props.token}
-                                fetchRooms={fetchRooms}
-                            />
-                        </Col>
-                    </Row> */}
 
             </Container>
         </>

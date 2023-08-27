@@ -7,7 +7,7 @@ export default function Nav() {
     <Navbar className="my-2"
     color="secondary"
     dark>
-        <h2 href="/">BRAND TBD</h2>
+        <h2 href="/">iChat</h2>
 
     </Navbar>
 

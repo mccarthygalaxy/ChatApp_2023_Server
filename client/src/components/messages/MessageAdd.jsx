@@ -3,21 +3,16 @@ import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
 import FullButton from '../buttons/FullButton';
 import { baseURL } from '../environments';
 
-
-
 function MessageAdd(props) {
-  
-
-    console.log(props.room_Id)
 
     const textRef = useRef();
-   
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const text = textRef.current.value;
 
         let body = JSON.stringify({
-          text
+        text
         })
 
         let url = `${baseURL}/message/${props.room_Id._id}`;
@@ -36,7 +31,6 @@ function MessageAdd(props) {
             const res = await fetch(url, requestOption);
             const data = await res.json();
 
-            // console.log(data);
             props.fetchMessages();
         } catch (err) {
             console.error(err.message);
@@ -45,7 +39,6 @@ function MessageAdd(props) {
 
     return (
         <>
-            {/* <h3>New Message</h3> */}
             <Form onSubmit={handleSubmit}>
                 <FormGroup>
                     {/* <Label></Label> */}
