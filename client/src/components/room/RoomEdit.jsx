@@ -5,6 +5,8 @@ import { baseURL } from '../environments';
 
 function RoomEdit(props) {
 
+    console.log(props);
+
     const titleRef = useRef();
     const descriptionRef = useRef();
 
@@ -60,6 +62,7 @@ function RoomEdit(props) {
 
             console.log(data);
             props.fetchRooms();
+            
         } catch (err) {
             console.error(err.message);
         }
@@ -106,7 +109,7 @@ function RoomEdit(props) {
             </ModalFooter>
         </Modal>
         </div>
-      </>
+    </>
     );
 }
 

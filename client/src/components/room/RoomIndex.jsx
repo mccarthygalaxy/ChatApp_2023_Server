@@ -37,8 +37,9 @@ function RoomIndex(props) {
     }
 
     useEffect(() => {
+        if(props.token)
         fetchRooms();
-    }, []);
+    }, [props.token]);
     
     return (
         <>  
@@ -66,14 +67,14 @@ function RoomIndex(props) {
                         </Col>
                     </Row>
                 <br/>
-                    <Row>
+                    {/* <Row>
                         <Col>
                             <RoomEdit
                                 token={props.token}
                                 fetchRooms={fetchRooms}
                             />
                         </Col>
-                    </Row>
+                    </Row> */}
 
             </Container>
         </>

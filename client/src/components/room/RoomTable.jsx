@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Col, Container, Table, Row } from 'reactstrap';
 import { baseURL } from '../environments'
 import { useNavigate } from 'react-router-dom';
+import RoomEdit from './RoomEdit';
 
 // const currentDate = new Date().toISOString();
 
@@ -66,14 +67,13 @@ function RoomTable(props) {
             }
         }
 
-
         return (
             <>
                 <h2>Chat Rooms</h2>
     
                 <Container>
                     <Row>
-                        <Col md="4">
+                        <Col>
                             <Table dark className="table-info" hover responsive bordered size="sm">
                             <thead>
                                 <tr>
@@ -95,11 +95,17 @@ function RoomTable(props) {
                                         >
                                             <td>{room.title}</td>
                                             <td>{room.description}</td>
-
-                                            <Button
+                                            <td>
+                                                <Button
                                                     color='warning'
-                                                    onClick={
-                                                        () => editRoom(props.selectedRoom._id)
+                                                    onClick={ () =>
+                                                        <RoomEdit
+                                                            token={props.token}
+                                                            fetchRooms={props.fetchRooms}
+                                                            room_Id={room._id}
+                                                        />
+                                                        // () => 
+                                                        // editRoom(props.selectedRoom._id)
                                                     }
                                                 >Edit</Button>
                                                 <Button
@@ -108,13 +114,14 @@ function RoomTable(props) {
                                                     }
                                                     color='danger'
                                                 >Delete</Button>
+                                            </td>
                                         </tr>
                                     ))}
                                 </tbody>
                             </Table>
                         </Col>
     
-                        <Col md="8">
+                        <Col>
                             <Table hover responsive bordered striped>
                             <thead>
                                 <tr>
