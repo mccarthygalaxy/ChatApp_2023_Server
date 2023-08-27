@@ -11,11 +11,16 @@ const RoomSchema = new mongoose.Schema({
     description: {
         type: String,
     },
-    messages: {
-        type: Array,
-        // type: [Object],
-    },
-    ownerId: {
+
+    messages: [{ _id: String, text: String, date: Date }],
+
+
+    // messages: {
+    //     type: Array,
+    // },
+
+
+    owner_Id: {
         type: mongoose.Types.ObjectId,
         ref: 'User', // Refers to 'User' collection for referencing the room Owner
     },

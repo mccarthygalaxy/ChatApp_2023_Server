@@ -18,11 +18,11 @@ router.post('/createRoom', validateSession, async (req, res) => {
         //1. Pull data from client (body)
         const { title, description, messages } = req.body;
 
-        const ownerId = req.user.id;
+        const owner_Id = req.user.id;
 
         //2. Create new object using the Model
         const room = new Room({
-            title, description, messages, ownerId,
+            title, description, messages, owner_Id,
             ownerName: req.user.username
         });
 
@@ -45,7 +45,7 @@ router.get('/:title', validateSession, async (req, res) => {
 
     try {
         const { title } = req.params;
-        const getRoom = await Room.findOne({ title: title }).populate('ownerId', 'username');
+        const getRoom = await Room.findOne({ title: title }).populate('owner_Id', 'username');
 
         getRoom ?
                 res.status(200).json({
@@ -63,7 +63,7 @@ router.get('/:title', validateSession, async (req, res) => {
 //! ROOM GET - GET ALL ROOMS -------------------------------------
 router.get('/', validateSession, async (req, res) => {
     try {
-        const getAllRooms = await Room.find().populate('ownerId', 'username');
+        const getAllRooms = await Room.find().populate('owner_Id', 'username');
 
         if (getAllRooms.length > 0) {
             const roomTitles = getAllRooms.map(room => room.title);
@@ -84,14 +84,14 @@ router.get('/', validateSession, async (req, res) => {
 });
 
 //! ROOM GET - GET ALL ROOMS BY OWNER -------------------------------------
-router.get('/owner/:ownerId', validateSession, async (req, res) => {
+router.get('/owner/:owner_Id', validateSession, async (req, res) => {
         try {
 
         //1. Pull value from the body
-        const { ownerId } = req.params;
+        const { owner_Id } = req.params;
         // const { ownerName } = req.room.ownerName;
         
-        const getAllByOwner = await Room.find({ ownerId }).populate('ownerId', 'ownerName');
+        const getAllByOwner = await Room.find({ owner_Id }).populate('owner_Id', 'ownerName');
 
         if (getAllByOwner.length > 0) {
             const roomTitles = getAllByOwner.map(room => room.title);
@@ -103,7 +103,7 @@ router.get('/owner/:ownerId', validateSession, async (req, res) => {
                 getAllByOwner,
                 roomTitles,
                 ownerNames,
-                message: `Found rooms owned by ${ownerId} - ${ownerNames}: ${roomTitles.join(', ')}`
+                message: `Found rooms owned by ${owner_Id} - ${ownerNames}: ${roomTitles.join(', ')}`
             });
         } else {
             res.status(404).json({
@@ -117,7 +117,7 @@ router.get('/owner/:ownerId', validateSession, async (req, res) => {
 
 
 //! PATCH ROOM INFO - UPDATE ROOM -------------------------------------
-router.patch('/patchRoomInfo/:id', validateSession, async (req, res) => {
+router.patch('/:id', validateSession, async (req, res) => {
     try {
 
         //1. Pull value from the body
@@ -135,11 +135,11 @@ router.patch('/patchRoomInfo/:id', validateSession, async (req, res) => {
 
         //3. Use method to locate document based on Title and pass in new info (description).
         const returnOption = { new: true };
-        const updated = await Room.findOneAndUpdate({ _id: id, ownerId: req.user.id }, newObj, returnOption);
+        const updated = await Room.findOneAndUpdate({ _id: id, owner_Id: req.user.id }, newObj, returnOption);
 
         //4. Respond to client
         res.status(200).json({
-            message: `${updated.title} description: '${updated.description}' owner: ${updated.ownerId}`,
+            message: `${updated.title} description: '${updated.description}' owner: ${updated.owner_Id}`,
             updated
         })
 
@@ -155,7 +155,7 @@ router.delete('/:id', validateSession, async (req, res) => {
         const { id } = req.params;
 
         //2. Use delete method to locate and remove based off ID
-        const deleteRoom = await Room.deleteOne({ _id: id, ownerId: req.user.id });
+        const deleteRoom = await Room.deleteOne({ _id: id, owner_Id: req.user.id });
 
         //3. Respond to client.
         deleteRoom.deletedCount ?

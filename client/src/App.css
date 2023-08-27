@@ -6,3 +6,9 @@
   /* text-align: center; */
   background-color: "blue";
 }
+
+footer {
+  margin-top: 2em;
+  padding: 1em;
+  background-color: rgb(172, 142, 195);
+}

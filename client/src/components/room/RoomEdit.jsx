@@ -3,7 +3,7 @@ import { Button, Form, FormGroup, Input, Label, Modal, ModalHeader, ModalBody, M
 import FullButton from '../buttons/FullButton';
 import { baseURL } from '../environments';
 
-function RoomCreate(props) {
+function RoomEdit(props) {
 
     const titleRef = useRef();
     const descriptionRef = useRef();
@@ -42,7 +42,7 @@ function RoomCreate(props) {
             // ownerName
         })
 
-        let url = `${baseURL}/room/createRoom`;
+        let url = `${baseURL}/room/`;
 
         let headers = new Headers();
         headers.append(`Content-Type`, `application/json`);
@@ -51,7 +51,7 @@ function RoomCreate(props) {
         const requestOption = {
             headers: headers,
             body: body,
-            method: 'POST'
+            method: 'PATCH'
         }
 
         try {
@@ -69,12 +69,12 @@ function RoomCreate(props) {
     <>
         <div>
         <Button color="danger" onClick={toggle}>
-            Create New Room
+            Edit Room
         </Button>
         <Modal isOpen={modal} toggle={toggle}>
-            <ModalHeader>New Chat Room</ModalHeader>
+            <ModalHeader>Edit Chat Room</ModalHeader>
                 <ModalBody>
-                    <h1>Create Room</h1>
+                    <h1>Edit Room</h1>
                     <Form onSubmit={handleSubmit}>
                     <FormGroup>
                         <Label>Title</Label>
@@ -92,7 +92,7 @@ function RoomCreate(props) {
                     </FormGroup>
 
                     <FullButton>
-                    <Button type='submit' color="success" onClick={toggle}>Create</Button>
+                    <Button type='submit' color="success" onClick={toggle}>Update</Button>
                     </FullButton>{" "}
                 </Form>
                 </ModalBody>
@@ -110,4 +110,4 @@ function RoomCreate(props) {
     );
 }
 
-export default RoomCreate
+export default RoomEdit

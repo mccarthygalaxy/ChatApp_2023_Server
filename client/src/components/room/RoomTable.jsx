@@ -1,123 +1,144 @@
 import React from 'react';
-import { Col, Container, Table, Row } from 'reactstrap';
+import { Button, Col, Container, Table, Row } from 'reactstrap';
+import { baseURL } from '../environments'
+import { useNavigate } from 'react-router-dom';
 
-const currentDate = new Date().toISOString();
+// const currentDate = new Date().toISOString();
 
-function RoomTable() {
-    return (
-        <>
-        <h2>Chat Rooms</h2>
+function RoomTable(props) {
 
-        <Container>
-            <Row>
-            <Col md="3">
-                <Table
-                dark
-                className="table-info"
-                hover
-                responsive
-                bordered
-                // striped
-                size="sm"
-                >
-                <thead>
-                    <tr>
-                    <th colSpan={2}>Rooms</th>
-                    </tr>
-                </thead>
-                <thead>
-                    <tr>
-                    <th>Room Name</th>
-                    <th>Last Post (time)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                    <td>Room 1</td>
-                    <td>{currentDate}</td>
-                    </tr>
-                    <tr>
-                    <td>Room 2</td>
-                    <td>{currentDate}</td>
-                    </tr>
-                    <tr>
-                    <td>Room 3</td>
-                    <td>{currentDate}</td>
-                    </tr>
-                    <tr>
-                    <td>Room 4</td>
-                    <td>{currentDate}</td>
-                    </tr>
-                    <tr>
-                    <td>The Tower</td>
-                    <td>{currentDate}</td>
-                    </tr>
-                    <tr>
-                    <td>Minneapolis</td>
-                    <td>{currentDate}</td>
-                    </tr>
-                </tbody>
-                </Table>
-            </Col>
+        // console.log(props.room);
 
-            <Col md="9">
-                <Table
-                // className='table-success'
-                hover
-                responsive
-                bordered
-                striped
-                // size='sm'
-                >
-                <thead>
-                    <tr>
-                    <th>User Name</th>
-                    <th>Message</th>
-                    <th>Time</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                    <td>User 1</td>
-                    <td>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Aperiam, at?
-                    </td>
-                    <td>{currentDate}</td>
-                    </tr>
-                    <tr>
-                    <td>User 2</td>
-                    <td>Lorem ipsum, dolor sit amet consectetur adipisicing.</td>
-                    <td>{currentDate}</td>
-                    </tr>
-                    <tr>
-                    <td>User 1</td>
-                    <td>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Deleniti.
-                    </td>
-                    <td>{currentDate}</td>
-                    </tr>
-                    <tr>
-                    <td>User 2</td>
-                    <td>Lorem ipsum dolor sit amet.</td>
-                    <td>{currentDate}</td>
-                    </tr>
-                    <tr>
-                    <td>User 3</td>
-                    <td>
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                        Iste soluta adipisci laboriosam.
-                    </td>
-                    <td>{currentDate}</td>
-                    </tr>
-                </tbody>
-                </Table>
-            </Col>
-            </Row>
-        </Container>
-    </>
-    );
-}
+        const navigate = useNavigate();
 
-export default RoomTable
+        async function deleteRoom(id) {
+            const url = `${baseURL}/room/${id}`
+            // console.log(id);
+            // console.log(url);
+            
+            let requestOption = {
+                headers: new Headers({
+                    'Authorization': props.token,
+                }),
+                method: 'DELETE'
+            }
+
+            try {
+            
+            } catch (err) {
+                console.error(err.message)
+            }
+            
+            let res = await fetch(url, requestOption);
+            let data = await res.json();
+    
+            // console.log(data);
+            if(data) {
+                props.fetchRooms();
+            }
+        }
+
+
+        async function editRoom(id) {
+            const url = `${baseURL}/room/${id}`
+            // console.log(id);
+            // console.log(url);
+            
+            let requestOption = {
+                headers: new Headers({
+                    'Authorization': props.token,
+                }),
+                method: 'PATCH'
+            }
+
+            try {
+            
+            } catch (err) {
+                console.error(err.message)
+            }
+            
+            let res = await fetch(url, requestOption);
+            let data = await res.json();
+    
+            // console.log(data);
+            if(data) {
+                props.fetchRooms();
+            }
+        }
+
+
+        return (
+            <>
+                <h2>Chat Rooms</h2>
+    
+                <Container>
+                    <Row>
+                        <Col md="4">
+                            <Table dark className="table-info" hover responsive bordered size="sm">
+                            <thead>
+                                <tr>
+                                <th colSpan={3}>Rooms</th>
+                                </tr>
+                            </thead>
+                            <thead>
+                                <tr>
+                                <th>Room Name</th>
+                                <th>Room Description</th>
+                                <th>Room Manage</th>
+                                </tr>
+                            </thead>
+                                <tbody>
+                                    {props.rooms.map(room => (
+                                        <tr
+                                            key={room._id}
+                                            onClick={() => props.setSelectedRoom(room)} // Pass setSelectedRoom here
+                                        >
+                                            <td>{room.title}</td>
+                                            <td>{room.description}</td>
+
+                                            <Button
+                                                    color='warning'
+                                                    onClick={
+                                                        () => editRoom(props.selectedRoom._id)
+                                                    }
+                                                >Edit</Button>
+                                                <Button
+                                                    onClick={
+                                                        () => deleteRoom(props.selectedRoom._id)
+                                                    }
+                                                    color='danger'
+                                                >Delete</Button>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </Table>
+                        </Col>
+    
+                        <Col md="8">
+                            <Table hover responsive bordered striped>
+                            <thead>
+                                <tr>
+                                <th>User Name</th>
+                                <th>Message</th>
+                                <th>Time</th>
+                                </tr>
+                            </thead>
+                                <tbody>
+                                    {props.selectedRoom &&
+                                        props.selectedRoom.messages.map(message => (
+                                            <tr key={message._id}>
+                                                <td>{message.ownerName}</td>
+                                                <td>{message.text}</td>
+                                                <td>{message.date}</td>
+                                            </tr>
+                                        ))}
+                                </tbody>
+                            </Table>
+                        </Col>
+                    </Row>
+                </Container>
+            </>
+        );
+    }
+    
+    export default RoomTable;
