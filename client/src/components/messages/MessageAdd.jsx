@@ -20,7 +20,7 @@ function MessageAdd(props) {
           text
         })
 
-        let url = `${baseURL}/message/${props.room_Id}`;
+        let url = `${baseURL}/message/${props.room_Id._id}`;
 
         let headers = new Headers();
         headers.append(`Content-Type`, `application/json`);

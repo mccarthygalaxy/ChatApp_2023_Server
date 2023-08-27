@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 export default function MessageDisplay({token, messages, fetchMessages, rooms, selectedRoom, setSelectedRoom}) {
 
   console.log("MessageDisplay token :", token);
-  console.log("MessageDisplay rooms :", rooms[0]._id);
+  // console.log("MessageDisplay rooms :", rooms[0]._id);
 
   const navigate = useNavigate();
 
@@ -51,7 +51,7 @@ export default function MessageDisplay({token, messages, fetchMessages, rooms, s
       <Table hover borderless dark>
    
         <tbody>
-        {messages && messages.length > 0 ? (
+        {selectedRoom && messages && messages.length > 0 ? (
         <table>
           <thead>
             <tr>
