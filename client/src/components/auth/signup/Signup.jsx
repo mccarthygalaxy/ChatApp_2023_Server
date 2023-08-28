@@ -18,8 +18,6 @@ function Signup(props) {
         const email = emailRef.current.value;
         const password = passwordRef.current.value;
 
-        // console.log(username, email, password)
-
         let body = JSON.stringify({
             username: username, 
             email: email, 
@@ -45,7 +43,7 @@ function Signup(props) {
 
         if(data.message === "Success!") {
             props.updateToken(data.token)
-            navigate('/rooms');
+            navigate('/room');
         } else {
             alert(data.message)
         }
